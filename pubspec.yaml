@@ -52,7 +52,46 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
+  fonts:
+    - family: SourceSans
+      fonts:
+        - asset: fonts/source-sans/OTF/SourceSans3-Black.otf
+          weight: 800
+        - asset: fonts/source-sans/OTF/SourceSans3-Bold.otf
+          weight: 700
+        - asset: fonts/source-sans/OTF/SourceSans3-Regular.otf
+          weight: 400
+        - asset: fonts/source-sans/OTF/SourceSans3-It.otf
+          weight: 400
+          style: italic
+        - asset: fonts/source-sans/OTF/SourceSans3-Light.otf
+          weight: 200
+    - family: SourceSerif
+      fonts:
+        - asset: fonts/source-serif/OTF/SourceSerif4-Black.otf
+          weight: 800
+        - asset: fonts/source-serif/OTF/SourceSerif4-Bold.otf
+          weight: 700
+        - asset: fonts/source-serif/OTF/SourceSerif4-Regular.otf
+          weight: 400
+        - asset: fonts/source-serif/OTF/SourceSerif4-It.otf
+          weight: 400
+          style: italic
+        - asset: fonts/source-serif/OTF/SourceSerif4-Light.otf
+          weight: 200
+    - family: SourceCode
+      fonts:
+        - asset: fonts/source-code-pro/OTF/SourceCodePro-Black.otf
+          weight: 800
+        - asset: fonts/source-code-pro/OTF/SourceCodePro-Bold.otf
+          weight: 700
+        - asset: fonts/source-code-pro/OTF/SourceCodePro-Regular.otf
+          weight: 400
+        - asset: fonts/source-code-pro/OTF/SourceCodePro-It.otf
+          weight: 400
+          style: italic
+        - asset: fonts/source-code-pro/OTF/SourceCodePro-Light.otf
+          weight: 200
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

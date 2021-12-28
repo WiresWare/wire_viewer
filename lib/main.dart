@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'constants/Fonts.dart';
 import 'pages/MainPage.dart';
 
 void main() {
@@ -14,6 +15,8 @@ class Application extends StatelessWidget {
     return MaterialApp(
       title: 'Wire Viewer',
       theme: ThemeData(
+        fontFamily: Fonts.SOURCE_SANS,
+        brightness: Brightness.dark,
         primarySwatch: Colors.grey,
       ),
       home: const MainPage(),
