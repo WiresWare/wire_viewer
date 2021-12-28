@@ -19,6 +19,7 @@ class Application extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: Colors.grey,
       ),
+      debugShowCheckedModeBanner: false,
       home: const MainPage(),
     );
   }
