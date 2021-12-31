@@ -26,12 +26,13 @@ class PathPainter extends CustomPainter {
   
   late List<CubicBezier> curves;
   PathPainter(this.wireContextVO) {
+    Point<double> start = wireContextVO.block.topLeft;
     curves = wireContextVO.connections.map((Point<double> end) {
-      Point<double> start = wireContextVO.block.topLeft;
+      final double startX = start.x + (end.x < start.x ? -1 : 1) * wireContextVO.block.width / 2;
       return CubicBezier([
-        math.Vector2(start.x, start.y),
-        math.Vector2((start.x + end.x) / 2, start.y),
-        math.Vector2((start.x + end.x) / 2, end.y),
+        math.Vector2(startX, start.y),
+        math.Vector2((startX + end.x) / 2, start.y),
+        math.Vector2((startX + end.x) / 2, end.y),
         math.Vector2(end.x, end.y),
       ]);
     }).toList();

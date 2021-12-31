@@ -35,12 +35,6 @@ class _MainPageState extends State<MainPage> {
       Point(ui.window.physicalSize.width - 100, ui.window.physicalSize.height - 100),
       Point(100, ui.window.physicalSize.height - 100),
     ]);
-  final List<ConnectionVO> connections = [
-    ConnectionVO(CENTER_POINT, const Point(100, 100)),
-    ConnectionVO(CENTER_POINT, Point(ui.window.physicalSize.width - 100, 100)),
-    ConnectionVO(CENTER_POINT, Point(ui.window.physicalSize.width - 100, ui.window.physicalSize.height - 100)),
-    ConnectionVO(CENTER_POINT, Point(100, ui.window.physicalSize.height - 100)),
-  ];
 
   @override
   Widget build(BuildContext context) {

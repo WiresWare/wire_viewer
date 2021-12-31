@@ -31,7 +31,7 @@ class _DraggableWidgetState extends State<DraggableWidget> {
       top: widget.contextVO.centerY,
       child: Draggable(
         child: Container(width: width, height: height,
-          color: Colors.orangeAccent.withOpacity(0.5),
+          color: Colors.orangeAccent,
           child: const Center(child: Text("Drag Me", style: ts,)),
         ),
         feedbackOffset: const Offset(0, 100),
