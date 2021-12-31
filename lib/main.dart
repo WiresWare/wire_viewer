@@ -16,12 +16,12 @@ class Application extends StatelessWidget {
     return MaterialApp(
       title: 'Wire Viewer',
       theme: ThemeData(
-          fontFamily: Fonts.SOURCE_SANS,
-          brightness: Brightness.light,
-          primaryColor: Colors.blue[700],
-          primarySwatch: Colors.grey,
-          canvasColor: Colors.grey.shade300,
-          appBarTheme: AppBarTheme(backgroundColor: Colors.grey.shade100, elevation: 1)),
+        fontFamily: Fonts.SOURCE_SANS,
+        brightness: Brightness.light,
+        primaryColor: Colors.blue[700],
+        primarySwatch: Colors.grey,
+        canvasColor: Colors.grey.shade300,
+        appBarTheme: AppBarTheme(backgroundColor: Colors.grey.shade100, elevation: 1)),
       debugShowCheckedModeBanner: false,
       home: const MainPage(),
     );

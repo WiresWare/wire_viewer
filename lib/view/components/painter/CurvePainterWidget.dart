@@ -7,9 +7,8 @@ import 'package:vector_math/vector_math.dart' as math;
 import 'package:wire_viewer/model/vos/ConnectionVO.dart';
 
 class CurvePainterWidget extends StatelessWidget {
-  final List<Offset> points;
   final List<ConnectionVO> connections;
-  const CurvePainterWidget(this.points, this.connections, {Key? key}) : super(key: key);
+  const CurvePainterWidget(this.connections, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
