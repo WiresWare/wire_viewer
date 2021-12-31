@@ -21,20 +21,21 @@ class _DraggableWidgetState extends State<DraggableWidget> {
 
   @override
   Widget build(BuildContext context) {
+    const ts = TextStyle(fontSize: 16);
     return Positioned(
-      left: widget.position.dx - width,
-      top: widget.position.dy - height,
+      left: widget.position.dx - width / 2,
+      top: widget.position.dy - height / 2,
       child: Draggable(
         child: Container(
           width: width,
           height: height,
-          color: Colors.orangeAccent,
-          child: const Center(child: Text("Drag Me")),
+          color: Colors.orangeAccent.withOpacity(0.5),
+          child: const Center(child: Text("Drag Me", style: ts,)),
         ),
         feedback: Container(
           width: width,
           height: height,
-          child: const Center(child: Text("Drag To")),
+          child: const Center(child: Text("Drag To", style: ts,)),
           color: Colors.green,
         ),
         onDragStarted: () {

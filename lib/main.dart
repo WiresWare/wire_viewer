@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wire/wire.dart';
 
-import 'constants/Fonts.dart';
-import 'pages/MainPage.dart';
+import 'constants/assets/Fonts.dart';
+import 'view/pages/MainPage.dart';
 
 void main() {
   runApp(const Application());
