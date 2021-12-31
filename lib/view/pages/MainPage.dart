@@ -48,7 +48,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(title: const Text('Wire Viewer Application')),
       body: Stack(
         children: [
-          CurvePainterWidget(connections),
+          CurvePainterWidget(wireContextVO),
           DraggableWidget(wireContextVO),
         ],
       ),

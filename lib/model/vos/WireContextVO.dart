@@ -2,7 +2,7 @@ import 'dart:math';
 
 class WireContextVO {
   final MutableRectangle<double> block;
-  final List<Point> connections;
+  final List<Point<double>> connections;
   WireContextVO(this.block, this.connections);
 
   get centerX => block.left - block.width / 2;
