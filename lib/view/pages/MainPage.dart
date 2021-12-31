@@ -6,7 +6,7 @@ import 'package:wire_viewer/model/vos/ConnectionVO.dart';
 import 'package:wire_viewer/model/vos/WireContextVO.dart';
 
 import '../components/DraggableWidget.dart';
-import '../components/painter/CurvePainterWidget.dart';
+import '../components/painter/ConnectionsPainterWidget.dart';
 
 generatePointOffset() {
   double xPos = Random().nextDouble() * ui.window.physicalSize.width;
@@ -42,7 +42,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(title: const Text('Wire Viewer Application')),
       body: Stack(
         children: [
-          CurvePainterWidget(wireContextVO),
+          ConnectionsPainterWidget(wireContextVO),
           DraggableWidget(wireContextVO),
         ],
       ),

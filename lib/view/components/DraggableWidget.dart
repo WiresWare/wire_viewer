@@ -31,8 +31,8 @@ class _DraggableWidgetState extends State<DraggableWidget> {
       width = widget.contextVO.block.width,
       height = widget.contextVO.block.height;
     return Positioned(
-      left: widget.contextVO.centerX,
-      top: widget.contextVO.centerY,
+      left: widget.contextVO.x,
+      top: widget.contextVO.y,
       child: Draggable(
         child: Container(width: width, height: height,
           color: Colors.orangeAccent,
