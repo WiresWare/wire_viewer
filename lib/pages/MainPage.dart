@@ -1,4 +1,15 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:wire_viewer/components/DraggableWidget.dart';
+import 'package:wire_viewer/components/painter/PointsPainterWidget.dart';
+
+import '../components/painter/CurvePainterWidget.dart';
+
+generatePointOffset() {
+  return Offset(Random().nextDouble() * window.physicalSize.width, Random().nextDouble() * window.physicalSize.height);
+}
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -7,37 +18,22 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final List<Offset> points = [generatePointOffset(), generatePointOffset()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wire Viewer Application'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      appBar: AppBar(title: const Text('Wire Viewer Application')),
+      body: Stack(
+        children: [
+          CurvePainterWidget(points),
+          PathPainterWidget(points),
+          ...points.map((position) => DraggableWidget(position)).toList(),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () {},
+        tooltip: 'Add',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
