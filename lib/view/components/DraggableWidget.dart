@@ -20,6 +20,10 @@ class _DraggableWidgetState extends State<DraggableWidget> {
     super.initState();
   }
 
+  void _updatePosition(Offset offset) {
+    setState(() { widget.contextVO.offset = offset; });
+  }
+
   @override
   Widget build(BuildContext context) {
     const ts = TextStyle(fontSize: 16);
@@ -39,13 +43,16 @@ class _DraggableWidgetState extends State<DraggableWidget> {
           child: const Center(child: Text("Drag To", style: ts,)),
           color: Colors.green,
         ),
+        onDragUpdate: (DragUpdateDetails details) {
+          _updatePosition(details.delta);
+        },
         onDragStarted: () {
           print("onDragStarted NOT: ${widget.contextVO.block.toString()}");
         },
         onDraggableCanceled: (Velocity velocity, Offset offset) {
           print("onDragEnd NOT: ${offset.toString()}");
-          final renderBox = context.findRenderObject() as render.RenderBox;
-          setState(() { widget.contextVO.offset = renderBox.globalToLocal(offset); });
+          // final renderBox = context.findRenderObject() as render.RenderBox;
+          // _updatePosition(renderBox.globalToLocal(offset));
         },
       ),
     );
