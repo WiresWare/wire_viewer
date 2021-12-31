@@ -45,11 +45,7 @@ class _DraggableWidgetState extends State<DraggableWidget> {
         onDraggableCanceled: (Velocity velocity, Offset offset) {
           print("onDragEnd NOT: ${offset.toString()}");
           final renderBox = context.findRenderObject() as render.RenderBox;
-          final Offset shift = renderBox.globalToLocal(offset);
-          setState(() {
-            widget.contextVO.offsetX = shift.dx;
-            widget.contextVO.offsetY = shift.dy;
-          });
+          setState(() { widget.contextVO.offset = renderBox.globalToLocal(offset); });
         },
       ),
     );

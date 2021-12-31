@@ -23,11 +23,13 @@ class CurvePainterWidget extends StatelessWidget {
 
 class PathPainter extends CustomPainter {
   final WireContextVO wireContextVO;
-  
-  late List<CubicBezier> curves;
-  PathPainter(this.wireContextVO) {
-    Point<double> start = wireContextVO.block.topLeft;
-    curves = wireContextVO.connections.map((Point<double> end) {
+
+  PathPainter(this.wireContextVO):super(repaint: wireContextVO.position) {}
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Point<double> start = wireContextVO.position.value;
+    List<CubicBezier> curves = wireContextVO.connections.map((Point<double> end) {
       final double startX = start.x + (end.x < start.x ? -1 : 1) * wireContextVO.block.width / 2;
       return CubicBezier([
         math.Vector2(startX, start.y),
@@ -36,10 +38,7 @@ class PathPainter extends CustomPainter {
         math.Vector2(end.x, end.y),
       ]);
     }).toList();
-  }
 
-  @override
-  void paint(Canvas canvas, Size size) {
     curves.forEach((curve) {
       final points = curve.points;
       canvas.drawPoints(ui.PointMode.points,
@@ -65,6 +64,6 @@ class PathPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter old) {
-    return false;
+    return true;
   }
 }
