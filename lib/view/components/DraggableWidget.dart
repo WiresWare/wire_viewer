@@ -2,13 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' as render;
+import 'package:wire_viewer/utils/PositionUtils.dart';
 
 import '../../model/vos/WireContextVO.dart';
 
 class DraggableWidget extends StatefulWidget {
-  final WireContextVO contextVO;
+  final WireContextVO wireContextVO;
 
-  const DraggableWidget(this.contextVO, {Key? key}) : super(key: key);
+  const DraggableWidget(this.wireContextVO, {Key? key}) : super(key: key);
 
   @override
   _DraggableWidgetState createState() => _DraggableWidgetState();
@@ -21,18 +22,19 @@ class _DraggableWidgetState extends State<DraggableWidget> {
   }
 
   void _updatePosition(Offset offset) {
-    setState(() { widget.contextVO.offset = offset; });
+    setState(() { widget.wireContextVO.offset = offset; });
   }
 
   @override
   Widget build(BuildContext context) {
     const ts = TextStyle(fontSize: 16);
     double
-      width = widget.contextVO.block.width,
-      height = widget.contextVO.block.height;
+      width = widget.wireContextVO.block.width,
+      height = widget.wireContextVO.block.height;
+
     return Positioned(
-      left: widget.contextVO.x,
-      top: widget.contextVO.y,
+      left: PositionUtils.snapToGrid(widget.wireContextVO.x),
+      top: PositionUtils.snapToGrid(widget.wireContextVO.y),
       child: Draggable(
         child: Container(width: width, height: height,
           color: Colors.orangeAccent,
@@ -40,19 +42,16 @@ class _DraggableWidgetState extends State<DraggableWidget> {
         ),
         feedbackOffset: const Offset(0, 100),
         feedback: Container(width: width, height: height,
-          child: const Center(child: Text("Drag To", style: ts,)),
-          color: Colors.green,
+          color: Colors.green.withOpacity(0.3),
         ),
         onDragUpdate: (DragUpdateDetails details) {
           _updatePosition(details.delta);
         },
         onDragStarted: () {
-          print("onDragStarted NOT: ${widget.contextVO.block.toString()}");
+          print("onDragStarted NOT: ${widget.wireContextVO.block.toString()}");
         },
         onDraggableCanceled: (Velocity velocity, Offset offset) {
           print("onDragEnd NOT: ${offset.toString()}");
-          // final renderBox = context.findRenderObject() as render.RenderBox;
-          // _updatePosition(renderBox.globalToLocal(offset));
         },
       ),
     );

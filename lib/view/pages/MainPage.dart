@@ -2,11 +2,11 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:wire_viewer/model/vos/ConnectionVO.dart';
 import 'package:wire_viewer/model/vos/WireContextVO.dart';
 
+import '../components/BackgroundGridWidget.dart';
 import '../components/DraggableWidget.dart';
-import '../components/painter/ConnectionsPainterWidget.dart';
+import '../components/painter/WiresPainterWidget.dart';
 
 generatePointOffset() {
   double xPos = Random().nextDouble() * ui.window.physicalSize.width;
@@ -15,10 +15,8 @@ generatePointOffset() {
   return Offset(xPos, yPos);
 }
 
-final CENTER_POINT = Point(
-  ui.window.physicalSize.width / 2,
-  ui.window.physicalSize.height / 2
-);
+final CENTER_POINT =
+    Point(ui.window.physicalSize.width / 2, ui.window.physicalSize.height / 2);
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -27,14 +25,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  // https://github.com/dragonman225/curved-arrows
   final wireContextVO = WireContextVO(
-    MutableRectangle(CENTER_POINT.x, CENTER_POINT.y, 100, 100),
-    [
-      const Point(100, 100),
-      Point(ui.window.physicalSize.width - 100, 100),
-      Point(ui.window.physicalSize.width - 100, ui.window.physicalSize.height - 100),
-      Point(100, ui.window.physicalSize.height - 100),
-    ]);
+      MutableRectangle(CENTER_POINT.x, CENTER_POINT.y, 100, 100), [
+    const Point(100, 100),
+    Point(ui.window.physicalSize.width - 100, 100),
+    Point(ui.window.physicalSize.width - 100,
+        ui.window.physicalSize.height - 100),
+    Point(100, ui.window.physicalSize.height - 100),
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +41,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(title: const Text('Wire Viewer Application')),
       body: Stack(
         children: [
+          const BackgroundGridWidget(),
           ConnectionsPainterWidget(wireContextVO),
           DraggableWidget(wireContextVO),
         ],

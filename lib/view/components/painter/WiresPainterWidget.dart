@@ -5,6 +5,7 @@ import 'package:bezier/bezier.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as math;
 import 'package:wire_viewer/model/vos/WireContextVO.dart';
+import 'package:wire_viewer/utils/PositionUtils.dart';
 
 class ConnectionsPainterWidget extends StatelessWidget {
   final WireContextVO wireContextVO;
@@ -30,7 +31,9 @@ class PathPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Point<double> start = wireContextVO.position.value;
     List<CubicBezier> curves = wireContextVO.connections.map((Point<double> end) {
-      final double startX = end.x < start.x ? wireContextVO.left : wireContextVO.right;
+      final double startX = end.x < start.x
+        ? PositionUtils.snapToGrid(wireContextVO.left)
+        : PositionUtils.snapToGrid(wireContextVO.right);
       return CubicBezier([
         math.Vector2(startX, start.y),
         math.Vector2((startX + end.x) / 2, start.y),
