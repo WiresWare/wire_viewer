@@ -37,7 +37,7 @@ class _MovableBlockWidgetState extends State<MovableBlockWidget> {
       child: Draggable(
         child: Container(width: width, height: height,
           color: Colors.lightGreen.withOpacity(0.3),
-          child: const Center(child: Text("Drag Me", style: ts,)),
+          // child: const Center(child: Text("Drag Me", style: ts,)),
         ),
         feedbackOffset: const Offset(0, 100),
         feedback: Container(width: width, height: height,

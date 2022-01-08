@@ -31,10 +31,11 @@ class _MainPageState extends State<MainPage> {
 
   final wireBlocks = [
     WireBlockVO.fromPosition(CENTER_POINT),
-    WireBlockVO.fromPosition(const Point<double>(100, 100)),
-    WireBlockVO.fromPosition(Point(screenWidth - 100, 100)),
-    WireBlockVO.fromPosition(Point(screenWidth - 100, screenHeight - 100)),
-    WireBlockVO.fromPosition(Point(100, screenHeight - 100)),
+    WireBlockVO.fromPosition(Point(CENTER_POINT.x, CENTER_POINT.y - 200)),
+    // WireBlockVO.fromPosition(const Point<double>(100, 100)),
+    // WireBlockVO.fromPosition(Point(screenWidth - 100, 100)),
+    // WireBlockVO.fromPosition(Point(screenWidth - 100, screenHeight - 100)),
+    // WireBlockVO.fromPosition(Point(100, screenHeight - 100)),
   ];
 
   @override

@@ -28,8 +28,13 @@ class WireBlockVO {
 
   get x => block.left - block.width / 2;
   get y => block.top - block.height / 2;
+  get top => y;
+  get bottom => y + block.height;
   get left => x;
   get right => x + block.width;
+
+  get topLeft => Point<double>(left, top);
+  get bottomRight => Point<double>(right, bottom);
 
   set offset(Offset value) {
     block.left += value.dx;
