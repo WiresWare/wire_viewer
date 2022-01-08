@@ -2,14 +2,28 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
+const BLOCK_WIDTH = 140.0;
+const BLOCK_HEIGHT = 90.0;
+
 class WireContextVO {
   final MutableRectangle<double> block;
-  final List<Point<double>> connections;
+  List<WireContextVO>? connections;
 
   late final ValueNotifier<Point<double>> position;
 
-  WireContextVO(this.block, this.connections) {
+  WireContextVO(this.block, { this.connections }) {
     position = ValueNotifier<Point<double>>(block.topLeft);
+  }
+
+  factory WireContextVO.fromPosition(Point<double> position, { connections }) {
+    return WireContextVO(
+      MutableRectangle<double>(
+        position.x,
+        position.y,
+        BLOCK_WIDTH,
+        BLOCK_HEIGHT
+      ),
+      connections: connections);
   }
 
   get x => block.left - block.width / 2;

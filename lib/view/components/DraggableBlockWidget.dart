@@ -6,16 +6,16 @@ import 'package:wire_viewer/utils/PositionUtils.dart';
 
 import '../../model/vos/WireContextVO.dart';
 
-class DraggableWidget extends StatefulWidget {
+class DraggableBlockWidget extends StatefulWidget {
   final WireContextVO wireContextVO;
 
-  const DraggableWidget(this.wireContextVO, {Key? key}) : super(key: key);
+  const DraggableBlockWidget(this.wireContextVO, {Key? key}) : super(key: key);
 
   @override
-  _DraggableWidgetState createState() => _DraggableWidgetState();
+  _DraggableBlockWidgetState createState() => _DraggableBlockWidgetState();
 }
 
-class _DraggableWidgetState extends State<DraggableWidget> {
+class _DraggableBlockWidgetState extends State<DraggableBlockWidget> {
   @override
   void initState() {
     super.initState();

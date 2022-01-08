@@ -7,9 +7,9 @@ import 'package:vector_math/vector_math.dart' as math;
 import 'package:wire_viewer/model/vos/WireContextVO.dart';
 import 'package:wire_viewer/utils/PositionUtils.dart';
 
-class ConnectionsPainterWidget extends StatelessWidget {
+class WiresPainterWidget extends StatelessWidget {
   final WireContextVO wireContextVO;
-  const ConnectionsPainterWidget(this.wireContextVO, {Key? key}) : super(key: key);
+  const WiresPainterWidget(this.wireContextVO, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +29,20 @@ class PathPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (wireContextVO.connections == null) return;
+
     Point<double> start = wireContextVO.position.value;
-    List<CubicBezier> curves = wireContextVO.connections.map((Point<double> end) {
-      final double startX = end.x < start.x
-        ? PositionUtils.snapToGrid(wireContextVO.left)
-        : PositionUtils.snapToGrid(wireContextVO.right);
+    List<CubicBezier> curves = wireContextVO.connections!.map((WireContextVO c) {
+      final end = c.block;
+      final x = end.left, y = end.top;
+      final double startX = x < start.x
+          ? PositionUtils.snapToGrid(wireContextVO.left)
+          : PositionUtils.snapToGrid(wireContextVO.right);
       return CubicBezier([
         math.Vector2(startX, start.y),
-        math.Vector2((startX + end.x) / 2, start.y),
-        math.Vector2((startX + end.x) / 2, end.y),
-        math.Vector2(end.x, end.y),
+        math.Vector2((startX + x) / 2, start.y),
+        math.Vector2((startX + x) / 2, y),
+        math.Vector2(x, y),
       ]);
     }).toList();
 

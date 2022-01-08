@@ -6,7 +6,7 @@ import 'package:wire_viewer/constants/StaticSettings.dart';
 import 'package:wire_viewer/model/vos/WireContextVO.dart';
 
 import '../components/BackgroundGridWidget.dart';
-import '../components/DraggableWidget.dart';
+import '../components/DraggableBlockWidget.dart';
 import '../components/painter/WiresPainterWidget.dart';
 
 generatePointOffset() {
@@ -29,21 +29,24 @@ class _MainPageState extends State<MainPage> {
   static get screenWidth => ui.window.physicalSize.width;
   static get screenHeight => ui.window.physicalSize.height;
 
+  final contexts = [
+    WireContextVO.fromPosition(CENTER_POINT),
+    WireContextVO.fromPosition(const Point<double>(100, 100)),
+    WireContextVO.fromPosition(Point(screenWidth - 100, 100)),
+    WireContextVO.fromPosition(Point(screenWidth - 100, screenHeight - 100)),
+    WireContextVO.fromPosition(Point(100, screenHeight - 100)),
+  ];
+
   // https://github.com/dragonman225/curved-arrows
-  final wireContextVO = WireContextVO(
-    MutableRectangle(CENTER_POINT.x, CENTER_POINT.y, 100, 100),
-    [
-      const Point(100, 100),
-      Point(screenWidth - 100, 100),
-      Point(screenWidth - 100, screenHeight - 100),
-      Point(100, screenHeight - 100),
-    ]);
+  late final wireContextVO = contexts[0]
+    ..connections = contexts.getRange(1, contexts.length).toList();
 
   @override
   Widget build(BuildContext context) {
     final contextWidth = screenWidth * StaticSettings.CONTEXT_SCALE_MULTIPLIER;
     final contextHeight = screenHeight * StaticSettings.CONTEXT_SCALE_MULTIPLIER;
     final contextSize = Rectangle<double>(0, 0, contextWidth, contextHeight);
+
     print('> MainPage -> contextSize $contextSize');
     return Scaffold(
       appBar: AppBar(title: const Text('Wire Viewer Application')),
@@ -57,8 +60,8 @@ class _MainPageState extends State<MainPage> {
         child: Stack(
           children: [
             BackgroundGridWidget(contextSize),
-            ConnectionsPainterWidget(wireContextVO),
-            DraggableWidget(wireContextVO),
+            WiresPainterWidget(wireContextVO),
+            DraggableBlockWidget(wireContextVO),
           ],
         ),
       ),
