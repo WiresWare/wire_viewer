@@ -73,8 +73,9 @@ class _MainPageState extends State<MainPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        tooltip: 'Add',
-        child: const Icon(Icons.add),
+        tooltip: 'Tools',
+        backgroundColor: Colors.white,
+        child: const Icon(Icons.adjust),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
