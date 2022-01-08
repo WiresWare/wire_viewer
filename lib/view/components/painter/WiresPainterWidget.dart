@@ -4,45 +4,48 @@ import 'dart:ui' as ui;
 import 'package:bezier/bezier.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as math;
-import 'package:wire_viewer/model/vos/WireContextVO.dart';
+import 'package:wire_viewer/model/vos/WireBlockVO.dart';
 import 'package:wire_viewer/utils/PositionUtils.dart';
 
 class WiresPainterWidget extends StatelessWidget {
-  final WireContextVO wireContextVO;
-  const WiresPainterWidget(this.wireContextVO, {Key? key}) : super(key: key);
+  final WireBlockVO wireBlockVO;
+  const WiresPainterWidget(this.wireBlockVO, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: CustomPaint(
         size: ui.window.physicalSize,
-        painter: PathPainter(wireContextVO),
+        painter: PathPainter(wireBlockVO),
       ),
     );
   }
 }
 
 class PathPainter extends CustomPainter {
-  final WireContextVO wireContextVO;
+  final WireBlockVO wireBlockVO;
 
-  PathPainter(this.wireContextVO):super(repaint: wireContextVO.position) {}
+  PathPainter(this.wireBlockVO):super(repaint: wireBlockVO.position) {}
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (wireContextVO.connections == null) return;
+    if (wireBlockVO.connections == null) return;
 
-    Point<double> start = wireContextVO.position.value;
-    List<CubicBezier> curves = wireContextVO.connections!.map((WireContextVO c) {
-      final end = c.block;
-      final x = end.left, y = end.top;
-      final double startX = x < start.x
-          ? PositionUtils.snapToGrid(wireContextVO.left)
-          : PositionUtils.snapToGrid(wireContextVO.right);
+    Point<double> start = wireBlockVO.position.value;
+    final positionXSideLeft = PositionUtils.snapToGrid(wireBlockVO.left);
+    final positionXSideRight = PositionUtils.snapToGrid(wireBlockVO.right);
+    
+    List<CubicBezier> curves = wireBlockVO.connections!.map((WireBlockVO connectionWireBlockVO) {
+      final block = connectionWireBlockVO.block;
+      final blockX = block.left, blockY = block.top;
+      final fromLeft = blockX < start.x;
+      final fromTop = blockY > start.y;
+      final double startX = fromLeft ? positionXSideLeft : positionXSideRight;
       return CubicBezier([
         math.Vector2(startX, start.y),
-        math.Vector2((startX + x) / 2, start.y),
-        math.Vector2((startX + x) / 2, y),
-        math.Vector2(x, y),
+        math.Vector2((startX + blockX) / 2, start.y),
+        math.Vector2((startX + blockX) / 2, blockY),
+        math.Vector2(blockX, blockY),
       ]);
     }).toList();
 

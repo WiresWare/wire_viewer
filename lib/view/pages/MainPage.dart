@@ -2,12 +2,12 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:wire_viewer/constants/StaticSettings.dart';
-import 'package:wire_viewer/model/vos/WireContextVO.dart';
 
-import '../components/BackgroundGridWidget.dart';
-import '../components/DraggableBlockWidget.dart';
-import '../components/painter/WiresPainterWidget.dart';
+import '../../constants/StaticSettings.dart';
+import '../../model/vos/WireBlockVO.dart';
+
+import '../components/layers/BackgroundLayerWidget.dart';
+import '../components/layers/WireBlocksLayerWidget.dart';
 
 generatePointOffset() {
   double xPos = Random().nextDouble() * ui.window.physicalSize.width;
@@ -29,17 +29,22 @@ class _MainPageState extends State<MainPage> {
   static get screenWidth => ui.window.physicalSize.width;
   static get screenHeight => ui.window.physicalSize.height;
 
-  final contexts = [
-    WireContextVO.fromPosition(CENTER_POINT),
-    WireContextVO.fromPosition(const Point<double>(100, 100)),
-    WireContextVO.fromPosition(Point(screenWidth - 100, 100)),
-    WireContextVO.fromPosition(Point(screenWidth - 100, screenHeight - 100)),
-    WireContextVO.fromPosition(Point(100, screenHeight - 100)),
+  final wireBlocks = [
+    WireBlockVO.fromPosition(CENTER_POINT),
+    WireBlockVO.fromPosition(const Point<double>(100, 100)),
+    WireBlockVO.fromPosition(Point(screenWidth - 100, 100)),
+    WireBlockVO.fromPosition(Point(screenWidth - 100, screenHeight - 100)),
+    WireBlockVO.fromPosition(Point(100, screenHeight - 100)),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+
+    wireBlocks[0].connections = wireBlocks.getRange(1, wireBlocks.length).toList();
+  }
+
   // https://github.com/dragonman225/curved-arrows
-  late final wireContextVO = contexts[0]
-    ..connections = contexts.getRange(1, contexts.length).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +53,7 @@ class _MainPageState extends State<MainPage> {
     final contextSize = Rectangle<double>(0, 0, contextWidth, contextHeight);
 
     print('> MainPage -> contextSize $contextSize');
+
     return Scaffold(
       appBar: AppBar(title: const Text('Wire Viewer Application')),
       body: InteractiveViewer(
@@ -58,11 +64,10 @@ class _MainPageState extends State<MainPage> {
         panEnabled: true,
         constrained: false,
         child: Stack(
-          children: [
-            BackgroundGridWidget(contextSize),
-            WiresPainterWidget(wireContextVO),
-            DraggableBlockWidget(wireContextVO),
-          ],
+          children: <Widget>[
+            BackgroundLayerWidget(contextSize),
+            WireBlocksLayerWidget(wireBlocks),
+          ]
         ),
       ),
       floatingActionButton: FloatingActionButton(

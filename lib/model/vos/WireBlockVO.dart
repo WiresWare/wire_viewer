@@ -3,20 +3,20 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 
 const BLOCK_WIDTH = 140.0;
-const BLOCK_HEIGHT = 90.0;
+const BLOCK_HEIGHT = 100.0;
 
-class WireContextVO {
+class WireBlockVO {
   final MutableRectangle<double> block;
-  List<WireContextVO>? connections;
+  List<WireBlockVO>? connections;
 
   late final ValueNotifier<Point<double>> position;
 
-  WireContextVO(this.block, { this.connections }) {
+  WireBlockVO(this.block, { this.connections }) {
     position = ValueNotifier<Point<double>>(block.topLeft);
   }
 
-  factory WireContextVO.fromPosition(Point<double> position, { connections }) {
-    return WireContextVO(
+  factory WireBlockVO.fromPosition(Point<double> position, { connections }) {
+    return WireBlockVO(
       MutableRectangle<double>(
         position.x,
         position.y,

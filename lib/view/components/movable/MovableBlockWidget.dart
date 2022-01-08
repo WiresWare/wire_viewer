@@ -1,21 +1,20 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' as render;
-import 'package:wire_viewer/utils/PositionUtils.dart';
 
-import '../../model/vos/WireContextVO.dart';
+import '../../../model/vos/WireBlockVO.dart';
+import '../../../utils/PositionUtils.dart';
 
-class DraggableBlockWidget extends StatefulWidget {
-  final WireContextVO wireContextVO;
+class MovableBlockWidget extends StatefulWidget {
+  final WireBlockVO wireContextVO;
 
-  const DraggableBlockWidget(this.wireContextVO, {Key? key}) : super(key: key);
+  const MovableBlockWidget(this.wireContextVO, {Key? key}) : super(key: key);
 
   @override
-  _DraggableBlockWidgetState createState() => _DraggableBlockWidgetState();
+  _MovableBlockWidgetState createState() => _MovableBlockWidgetState();
 }
 
-class _DraggableBlockWidgetState extends State<DraggableBlockWidget> {
+class _MovableBlockWidgetState extends State<MovableBlockWidget> {
   @override
   void initState() {
     super.initState();
@@ -37,7 +36,7 @@ class _DraggableBlockWidgetState extends State<DraggableBlockWidget> {
       top: PositionUtils.snapToGrid(widget.wireContextVO.y),
       child: Draggable(
         child: Container(width: width, height: height,
-          color: Colors.orangeAccent,
+          color: Colors.lightGreen.withOpacity(0.3),
           child: const Center(child: Text("Drag Me", style: ts,)),
         ),
         feedbackOffset: const Offset(0, 100),
