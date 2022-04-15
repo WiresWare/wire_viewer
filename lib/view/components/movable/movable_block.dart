@@ -1,20 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:wire_viewer/model/vos/WireBlockVO.dart';
+import 'package:wire_viewer/utils/PositionUtils.dart';
 
-import '../../../model/vos/WireBlockVO.dart';
-import '../../../utils/PositionUtils.dart';
-
-class MovableBlockWidget extends StatefulWidget {
+class MovableBlock extends StatefulWidget {
   final WireBlockVO wireContextVO;
 
-  const MovableBlockWidget(this.wireContextVO, {Key? key}) : super(key: key);
+  const MovableBlock(this.wireContextVO, {Key? key}) : super(key: key);
 
   @override
-  _MovableBlockWidgetState createState() => _MovableBlockWidgetState();
+  _MovableBlockState createState() => _MovableBlockState();
 }
 
-class _MovableBlockWidgetState extends State<MovableBlockWidget> {
+class _MovableBlockState extends State<MovableBlock> {
   @override
   void initState() {
     super.initState();

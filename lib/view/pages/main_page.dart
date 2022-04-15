@@ -2,12 +2,10 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-
-import '../../constants/StaticSettings.dart';
-import '../../model/vos/WireBlockVO.dart';
-
-import '../components/layers/BackgroundLayerWidget.dart';
-import '../components/layers/WireBlocksLayerWidget.dart';
+import 'package:wire_viewer/constants/StaticSettings.dart';
+import 'package:wire_viewer/model/vos/WireBlockVO.dart';
+import 'package:wire_viewer/view/components/layers/layer_background.dart';
+import 'package:wire_viewer/view/components/layers/layer_wire_blocks.dart';
 
 generatePointOffset() {
   double xPos = Random().nextDouble() * ui.window.physicalSize.width;
@@ -16,8 +14,7 @@ generatePointOffset() {
   return Offset(xPos, yPos);
 }
 
-final CENTER_POINT =
-    Point(ui.window.physicalSize.width / 2, ui.window.physicalSize.height / 2);
+final CENTER_POINT = Point(ui.window.physicalSize.width / 2, ui.window.physicalSize.height / 2);
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -41,8 +38,8 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-
-    wireBlocks[0].connections = wireBlocks.getRange(1, wireBlocks.length).toList();
+    final connections = wireBlocks.getRange(2, wireBlocks.length).toList();
+    wireBlocks[0].connections = connections;
   }
 
   // https://github.com/dragonman225/curved-arrows
@@ -66,8 +63,8 @@ class _MainPageState extends State<MainPage> {
         constrained: false,
         child: Stack(
           children: <Widget>[
-            BackgroundLayerWidget(contextSize),
-            WireBlocksLayerWidget(wireBlocks),
+            BackgroundLayer(contextSize),
+            WireBlocksLayer(wireBlocks, contextSize),
           ]
         ),
       ),

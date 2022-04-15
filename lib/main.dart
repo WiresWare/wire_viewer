@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:wire/wire.dart';
 
+import 'package:json_rpc_2/json_rpc_2.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
 import 'constants/assets/Fonts.dart';
-import 'view/pages/MainPage.dart';
+import 'view/pages/main_page.dart';
 
 void main() {
+
   runApp(const Application());
 }
 
@@ -23,7 +27,7 @@ class Application extends StatelessWidget {
         canvasColor: Colors.grey.shade300,
         appBarTheme: AppBarTheme(backgroundColor: Colors.grey.shade100, elevation: 1)),
       debugShowCheckedModeBanner: false,
-      home: const MainPage(),
+      home: MainPage(),
     );
   }
 }

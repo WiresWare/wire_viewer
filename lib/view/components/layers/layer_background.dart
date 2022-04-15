@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:wire_viewer/constants/StaticSettings.dart';
 
-class BackgroundLayerWidget extends StatelessWidget {
+class BackgroundLayer extends StatelessWidget {
   final Rectangle<double> size;
-  const BackgroundLayerWidget(this.size, { Key? key }) : super(key: key);
+  const BackgroundLayer(this.size, { Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:wire_viewer/model/vos/WireBlockVO.dart';
 import 'package:wire_viewer/utils/PositionUtils.dart';
 
-class WiresPainterWidget extends StatelessWidget {
+class WiresPainter extends StatelessWidget {
   final WireBlockVO wireBlockVO;
-  const WiresPainterWidget(this.wireBlockVO, {Key? key}) : super(key: key);
+  const WiresPainter(this.wireBlockVO, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +34,9 @@ class PathPainter extends CustomPainter {
 
     // _drawDot(canvas, center);
     // _drawDot(canvas, topLeft, Colors.pink);
+
     final connectionPoints = wireBlockVO.connectionPoints;
-
-    wireBlockVO.connections!
-      .where((WireBlockVO c) => !c.block.intersects(wireBlockVO.block))
-      .map((WireBlockVO c) {
-
+    wireBlockVO.connections!.map((WireBlockVO c) {
       Point<double> pOne = connectionPoints[0];
       Point<double> pTwo = c.connectionPoints[0];
       double
@@ -50,8 +47,7 @@ class PathPainter extends CustomPainter {
         c.connectionPoints.forEach((p2) {
           testDistance = p1.distanceTo(p2);
           if (testDistance < minDistance) {
-            pOne = p1;
-            pTwo = p2;
+            pOne = p1; pTwo = p2;
             minDistance = testDistance;
           }
         });

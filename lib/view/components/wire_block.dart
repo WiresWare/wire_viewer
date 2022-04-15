@@ -1,12 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' as render;
-import 'package:wire_viewer/utils/PositionUtils.dart';
+import 'package:wire_viewer/model/vos/WireBlockVO.dart';
+import 'package:wire_viewer/view/components/movable/movable_block.dart';
 
-import '../../../model/vos/WireBlockVO.dart';
-import 'movable/MovableBlockWidget.dart';
-import 'painter/WiresPainterWidget.dart';
+import 'painter/wires_painter.dart';
 
 class WireBlockWidget extends StatefulWidget {
   final WireBlockVO wireBlockVO;
@@ -30,9 +28,9 @@ class _WireBlockWidgetState extends State<WireBlockWidget> {
     print('> WireBlockWidget -> build: has ${connections?.length} connections');
     return connections != null ? Stack(
       children: [
-        WiresPainterWidget(wireBlockVO),
-        MovableBlockWidget(wireBlockVO),
+        WiresPainter(wireBlockVO),
+        MovableBlock(wireBlockVO),
       ],
-    ) : MovableBlockWidget(wireBlockVO);
+    ) : MovableBlock(wireBlockVO);
   }
 }
