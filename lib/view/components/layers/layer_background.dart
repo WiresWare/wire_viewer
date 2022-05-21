@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wire_viewer/constants/StaticSettings.dart';
 
 class BackgroundLayer extends StatelessWidget {
-  final Rectangle<double> size;
+  final Size size;
   const BackgroundLayer(this.size, { Key? key }) : super(key: key);
 
   @override

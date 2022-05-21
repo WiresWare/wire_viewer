@@ -3,7 +3,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:wire_viewer/constants/StaticSettings.dart';
-import 'package:wire_viewer/model/vos/WireBlockVO.dart';
+import 'package:wire_viewer/model/vos/screen_info_vo.dart';
+import 'package:wire_viewer/model/vos/wire_block_vo.dart';
 import 'package:wire_viewer/view/components/layers/layer_background.dart';
 import 'package:wire_viewer/view/components/layers/layer_wire_blocks.dart';
 
@@ -25,6 +26,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   static get screenWidth => ui.window.physicalSize.width;
   static get screenHeight => ui.window.physicalSize.height;
+
+  TransformationController _transformationController =
+    TransformationController();
 
   final wireBlocks = [
     WireBlockVO.fromPosition(CENTER_POINT),
@@ -48,14 +52,26 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     final contextWidth = screenWidth * StaticSettings.CONTEXT_SCALE_MULTIPLIER;
     final contextHeight = screenHeight * StaticSettings.CONTEXT_SCALE_MULTIPLIER;
-    final contextSize = Rectangle<double>(0, 0, contextWidth, contextHeight);
 
-    print('> MainPage -> contextSize $contextSize');
+    final screenInfoVO = ScreenInfoVO(Size(contextWidth, contextHeight));
+
+    print('> MainPage -> contextSize ${screenInfoVO.size}');
 
     return Scaffold(
       appBar: AppBar(title: const Text('Wire Viewer Application')),
       body: InteractiveViewer(
+        transformationController: _transformationController,
         boundaryMargin: const EdgeInsets.all(StaticSettings.CONTEXT_BOUNDARY_MARGIN),
+        onInteractionUpdate: (updateDetails) {
+          double correctScaleValue = _transformationController.value.getMaxScaleOnAxis();
+          if (screenInfoVO.scale.value != correctScaleValue) {
+            wireBlocks.forEach((block) { block.scale = correctScaleValue; });
+            screenInfoVO.scale.value = correctScaleValue;
+            print('Interaction Update -'
+                ' Scale: ${correctScaleValue.toString()}'
+            );
+          }
+        },
         minScale: 0.1,
         maxScale: StaticSettings.CONTEXT_SCALE_MULTIPLIER,
         clipBehavior: Clip.hardEdge,
@@ -63,8 +79,9 @@ class _MainPageState extends State<MainPage> {
         constrained: false,
         child: Stack(
           children: <Widget>[
-            BackgroundLayer(contextSize),
-            WireBlocksLayer(wireBlocks, contextSize),
+            BackgroundLayer(screenInfoVO.size.value),
+            ValueListenableBuilder(valueListenable: screenInfoVO.scale, builder: (_, __, ___) =>
+              WireBlocksLayer(wireBlocks, screenInfoVO)),
           ]
         ),
       ),

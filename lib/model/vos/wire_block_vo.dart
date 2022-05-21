@@ -31,17 +31,22 @@ class WireBlockVO {
       connections: connections);
   }
 
+  double scale = 1.0;
+
   get x => block.left;
   get y => block.top;
 
+  get width => block.width * scale;
+  get height => block.height * scale;
+
   get top => y;
-  get bottom => y + block.height;
+  get bottom => y + height;
   get left => x;
-  get right => x + block.width;
+  get right => x + width;
 
   set offset(Offset value) {
-    block.left += value.dx;
-    block.top += value.dy;
+    block.left += value.dx / scale;
+    block.top += value.dy / scale;
     _calculateConnectionPoints();
   }
 }

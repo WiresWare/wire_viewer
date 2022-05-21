@@ -2,8 +2,8 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:wire_viewer/model/vos/WireBlockVO.dart';
-import 'package:wire_viewer/utils/PositionUtils.dart';
+import 'package:wire_viewer/model/vos/wire_block_vo.dart';
+import 'package:wire_viewer/utils/utils_position.dart';
 
 class WiresPainter extends StatelessWidget {
   final WireBlockVO wireBlockVO;
@@ -53,8 +53,8 @@ class PathPainter extends CustomPainter {
         });
       });
 
-      pOne = PositionUtils.snapToGridPoint(pOne);
-      pTwo = PositionUtils.snapToGridPoint(pTwo);
+      pOne = PositionUtils.utilSnapToGridPoint(pOne);
+      pTwo = PositionUtils.utilSnapToGridPoint(pTwo);
 
       Offset pStart = Offset(pOne.x, pOne.y);
       Offset pEnd = Offset(pTwo.x, pTwo.y);

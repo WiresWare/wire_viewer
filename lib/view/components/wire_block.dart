@@ -1,7 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:wire_viewer/model/vos/WireBlockVO.dart';
+import 'package:wire_viewer/model/vos/wire_block_vo.dart';
 import 'package:wire_viewer/view/components/movable/movable_block.dart';
 
 import 'painter/wires_painter.dart';
