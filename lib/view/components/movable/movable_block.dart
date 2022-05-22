@@ -14,14 +14,37 @@ class MovableBlock extends StatefulWidget {
 }
 
 class _MovableBlockState extends State<MovableBlock> {
+
+  final _backgroundColor = Colors.lightGreen;
+  final _backgroundColorSelected = Colors.green;
+
+  double _localMouseX = 0.0;
+  double _localMouseY = 0.0;
+
+  bool _isHover = false;
+  bool _isSelected = false;
+
   @override
   void initState() {
     super.initState();
   }
 
-  void _updatePosition(Offset offset) {
+  void _onUpdatePosition(Offset offset) {
     setState(() { widget.wireContextVO.offset = offset; });
   }
+
+  void _onMouseHover(PointerEvent pointerEvent) {
+    _localMouseX = pointerEvent.localPosition.dx;
+    _localMouseY = pointerEvent.localPosition.dy;
+    // print('> MovableBlock -> _onMouseHover: x|y = ${_innerMouseX} | ${_innerMouseY}');
+  }
+
+  void _onClick() {
+    print('> MovableBlock -> _onMouseHover: x|y = ${_localMouseX} | ${_localMouseY}');
+    _isSelected = !_isSelected;
+  }
+
+  double get scale => widget.wireContextVO.scale;
 
   @override
   Widget build(BuildContext context) {
@@ -30,27 +53,42 @@ class _MovableBlockState extends State<MovableBlock> {
       left: PositionUtils.utilSnapToGrid(widget.wireContextVO.x),
       top: PositionUtils.utilSnapToGrid(widget.wireContextVO.y),
       child: Draggable(
-        child: Container(
-          width: widget.wireContextVO.block.width,
-          height: widget.wireContextVO.block.height,
-          color: Colors.lightGreen.withOpacity(0.3),
-          // child: const Center(child: Text("Drag Me", style: ts,)),
+        child: StatefulBuilder(builder: (_, update) => MouseRegion(
+            onEnter: (_) => update(() { _isHover = true; }),
+            onExit:  (_) => update(() { _isHover = false; }),
+            onHover: _onMouseHover,
+            child: GestureDetector(
+              onTap: () => update(_onClick),
+              child: Container(
+                width: widget.wireContextVO.block.width,
+                height: widget.wireContextVO.block.height,
+                decoration: _buildDecoration(),
+                // child: const Center(child: Text("Drag Me", style: ts,)),
+              ),
+            ),
+          ),
         ),
-        feedback: Container(
-          width: widget.wireContextVO.width,
-          height: widget.wireContextVO.height,
-          color: Colors.green.withOpacity(0.3),
-        ),
+        feedback: Container(),
         onDragUpdate: (DragUpdateDetails details) {
-          _updatePosition(details.delta);
+          _onUpdatePosition(details.delta);
         },
         onDragStarted: () {
-          print("onDragStarted NOT: ${widget.wireContextVO.block.toString()}");
+          print("> MovableBlock -> onDragStarted: inner offset x|y = ${_localMouseX}|${widget.wireContextVO.centerX} - w|h = ${widget.wireContextVO.width}|${widget.wireContextVO.height}");
         },
         onDraggableCanceled: (Velocity velocity, Offset offset) {
-          print("onDragEnd NOT: ${offset.toString()}");
+          print("> MovableBlock -> onDragEnd: ${offset.toString()}");
         },
       ),
+    );
+  }
+
+  BoxDecoration _buildDecoration() {
+    return BoxDecoration(
+      color: _isSelected ? _backgroundColorSelected : _backgroundColor,
+      border: _isHover ? Border.all(
+        width: 2,
+        color: Colors.red
+      ) : null,
     );
   }
 }
